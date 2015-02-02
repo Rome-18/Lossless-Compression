@@ -10,7 +10,12 @@
 #include <string>
 #include "Huffman.h"
 #include "shannon.h"
-#include "adaptivehuffman.h"
+#include "runLength.h"
+#include "adaptiveHuff.h"
+
+
+
+//#include "af.h"
 
 using namespace std;
 
@@ -19,7 +24,7 @@ int main(int argc, char * argv[]) {
     
     char *filename;
     
-    string default_file="audio.dat";
+    string default_file="text.dat";
     
     if(argv[1]==NULL){
         filename=&default_file[0];
@@ -33,6 +38,13 @@ int main(int argc, char * argv[]) {
     
     huffman_routine(filename);
     shannon_routine(filename);
+    adaptiveCompr(filename);
+    basicRLC(filename);
+    basicRLDC("text.dat-run-length");
+    modifiedRLC(filename);
+    modifiedRLDC("text.dat-modi-run-length");
+   
+   
     
     
     return 0;

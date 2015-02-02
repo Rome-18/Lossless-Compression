@@ -166,9 +166,9 @@ void shannonCode(ShannonTable *table, Node *root, int code, int bit, int length)
 void doCompression(char* filename, ShannonTable *table){
     
     int bit_count=0;
-    char *output=new char;
+    char *output=new char[32];
     strcat(output, filename);
-    strcat(output, "-shannon");
+    strcat(output, "-shannon-fano");
     
     BIT_FILE *output_file;
     output_file = OpenOutputBitFile(output);

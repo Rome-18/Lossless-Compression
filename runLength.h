@@ -11,4 +11,9 @@
 
 #include <stdio.h>
 
+void basicRLC(char *filename);
+void basicRLDC(char* filename);
+void modifiedRLC(char* filename);
+void modifiedRLDC(char *filename);
+
 #endif /* defined(__Lossless__runLength__) */
