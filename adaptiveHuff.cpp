@@ -48,6 +48,39 @@ void adaptiveCompr(char *filename){
     ifstream infile(filename, ios_base::in | ios_base::binary);
     unsigned char sym;
     
+    // Read in first symbol of the input file
+    sym=infile.get();
+    temp=new AHNode;
+    
+    
+    // Initialize the NYA node, add NYA and new node to the tree;
+    NYA=new AHNode;
+    
+    // Link three nodes: root, NYA and new node
+    root->left=NYA;
+    root->right=temp;
+    
+    temp->parent=root;
+    temp->ID=root->ID-1;
+    temp->val=sym;
+    temp->weight=1;
+    nodeList[sym]=temp;
+    
+    NYA->parent=root;
+    NYA->ID=root->ID-2;
+    
+    // add to the tree structure
+    nodeTree[NYA->ID]=NYA;
+    nodeTree[temp->ID]=temp;
+
+    root->weight=1;
+    OutputBit(output_file, 0);
+    OutputBits(output_file, sym, 8);
+    bit_count+=9;
+    
+    
+    
+    
     
     while(infile.good()){
         sym=infile.get();
@@ -56,30 +89,30 @@ void adaptiveCompr(char *filename){
         if(nodeList[sym]==NULL){
             temp=new AHNode;
             // first ever symbol, initial tree; add NYA;
-            if(NYA==NULL){
-                NYA=new AHNode;
-                
-                root->left=NYA;
-                root->right=temp;
-                
-                
-                temp->parent=root;
-                temp->ID=root->ID-1;
-                temp->val=sym;
-                temp->weight=1;
-                nodeList[sym]=temp;
-                
-                NYA->parent=root;
-                NYA->ID=root->ID-2;
-                
-                nodeTree[NYA->ID]=NYA;
-                nodeTree[temp->ID]=temp;
-                
-                root->weight=1;
-                OutputBit(output_file, 0);
-                OutputBits(output_file, sym, 8);
-                bit_count+=9;
-            }else{
+//            if(NYA==NULL){
+//                NYA=new AHNode;
+//                
+//                root->left=NYA;
+//                root->right=temp;
+//                
+//                
+//                temp->parent=root;
+//                temp->ID=root->ID-1;
+//                temp->val=sym;
+//                temp->weight=1;
+//                nodeList[sym]=temp;
+//                
+//                NYA->parent=root;
+//                NYA->ID=root->ID-2;
+//                
+//                nodeTree[NYA->ID]=NYA;
+//                nodeTree[temp->ID]=temp;
+//                
+//                root->weight=1;
+//                OutputBit(output_file, 0);
+//                OutputBits(output_file, sym, 8);
+//                bit_count+=9;
+//            }else{
                 codeLength=0;
                // code=getCode(NYA,0,&codeLength);
                 code=getCode2(NYA,0,0,&codeLength);
@@ -90,7 +123,7 @@ void adaptiveCompr(char *filename){
                 bit_count+=codeLength;
                 NYA=addnewNode(NYA, nodeList, nodeTree, sym);
                 updateTree(NYA->parent->parent, nodeTree);
-            }
+//            }
         }else{// old symbol comes
             codeLength=0;
             //code=getCode(nodeList[sym], 0, &codeLength);

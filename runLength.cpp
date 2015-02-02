@@ -49,7 +49,7 @@ void basicRLC(char *filename){
             
             OutputBits(output_file, counter, 8);
             OutputBits(output_file, previous, 8);
-            cout<<(char)previous;
+            //cout<<(char)previous;
             bit_count+=16;
             counter=1;
             previous=sym;
@@ -59,11 +59,11 @@ void basicRLC(char *filename){
     }
     
     ///  think about it, do I need to write this out?????
-   OutputBits(output_file, counter, 8);
-OutputBits(output_file, previous, 8);
+  // OutputBits(output_file, counter, 8);
+//OutputBits(output_file, previous, 8);
   // cout<<(char)previous<<endl;
     //OutputBits(output_file, 256, 8);
-    bit_count+=16;
+  //  bit_count+=16;
     
     infile.close();
     CloseOutputBitFile(output_file);
@@ -215,6 +215,5 @@ void modifiedRLDC(char *filename){
     
     infile.close();
     CloseOutputBitFile(output_file);
-    
     
 }

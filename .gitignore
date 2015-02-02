@@ -14,3 +14,17 @@ debug/debug
 *.sf
 
 *.dat
+
+*.dat-adaptive-huffman
+
+*.dat-huffman
+
+*.dat-run-length
+
+*.dat-modi-run-length
+
+*.dat-modi-run-length-recov
+
+*.dat-shannon-fano
+
+*.dat-run-length-recov

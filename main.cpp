@@ -40,9 +40,9 @@ int main(int argc, char * argv[]) {
     shannon_routine(filename);
     adaptiveCompr(filename);
     basicRLC(filename);
-    basicRLDC("text.dat-run-length");
+    //basicRLDC("text.dat-run-length");
     modifiedRLC(filename);
-    modifiedRLDC("text.dat-modi-run-length");
+    //modifiedRLDC("text.dat-modi-run-length");
    
    
     
