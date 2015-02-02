@@ -13,12 +13,12 @@
 
 
 typedef struct ahnode{
-    int val=-1;
-    int weight=0;
-    int ID=-1;
-    ahnode *left=NULL;
-    ahnode *right=NULL;
-    ahnode *parent=NULL;
+    int val;
+    int weight;
+    int ID;
+    ahnode *left;
+    ahnode *right;
+    ahnode *parent;
     
 }AHNode;
 

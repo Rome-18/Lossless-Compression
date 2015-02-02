@@ -7,33 +7,29 @@
 
 All: LosslessDataCompression
 LosslessDataCompression:
-	@echo ">>>>>>>>>compile the program" 
-#lossless: main.o Huffman.o shannon.o adaptiveHuff.o runLength.o bitio.o 
-	g++ -o debug/debug main.o Huffman.o shannon.o adaptiveHuff.o runLength.o bitio.o
 
-#main.o: main.cpp Huffman.h shannon.h adaptiveHuff.h runLength.h bitio.h errhand.h
-	g++ -c main.cpp
-
-#runLength.o: runLength.cpp bitio.h errhand.h
-	g++ -c runLength.cpp
-
-#adaptiveHuff.o: adaptiveHuff.cpp bitio.h errhand.h
-	g++ -c adaptiveHuff.cpp
-
-#shannon.o: shannon.cpp Huffman.h bitio.h errhand.h
-	g++ -c shannon.cpp
-
-#Huffman.o: Huffman.cpp Huffman.h bitio.h errhand.h 
-	g++ -c Huffman.cpp 
-
-#bitio.o: bitio.cpp bitio.h errhand.h
+	@echo ">>compiling the program" 
 	g++ -c bitio.cpp
 
+	g++ -c Huffman.cpp 
 
-	@echo ">>>>>>>>>Compile finished."
-	@echo ">>>>>>>>>Instruction on excuting the program."
-	@echo ">>>>>>>>>>>>>Run the program without any parameter will run encoding on text.dat by default"
+	g++ -c shannon.cpp
+
+	g++ -c adaptiveHuff.cpp
+
+	g++ -c MTF.cpp
+
+	g++ -c runLength.cpp
+
+	g++ -c main.cpp
+
+	g++ -o debug/lossless main.o Huffman.o shannon.o adaptiveHuff.o runLength.o MTF.o bitio.o
+
+
+	@echo ">>Compile finished."
+	@echo ">>Instruction on excuting the program."
+	@echo ">>>>>>>>>>>>>Run the program with correct format and parameters"
 	@echo ">>>>>>>>>>>>>For Shannon-Fano, Huffman and Adaptive Huffman encoding, follow the format below"
-	@echo ">>>>>>>>>>>>>./debug encode [sf/hm/af] filename"
+	@echo ">>>>>>>>>>>>>./lossless encode [sf/hm/ah] [filename]"
 	@echo ">>>>>>>>>>>>>For run length encoding and decoding, follow the format below"
-	@echo ">>>>>>>>>>>>>./debug [encode/decode] [rl/mrl] filename"
+	@echo ">>>>>>>>>>>>>./lossless [encode/decode] [rl/mrl] [filename]"

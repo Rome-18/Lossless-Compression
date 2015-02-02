@@ -20,7 +20,7 @@ using namespace std;
 
 void basicRLC(char *filename){
     int counter=0;
-    int size=0;
+ //   int size=0;
     int bit_count;
     unsigned char previous;
     
@@ -28,7 +28,7 @@ void basicRLC(char *filename){
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
-    strcat(output, "-run-length");
+    strcat(output, "-RL");
     output_file=OpenOutputBitFile(output);
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
@@ -42,7 +42,7 @@ void basicRLC(char *filename){
     // from second symbol to EOF
     while(infile.good()){
         sym=infile.get();
-        size++;
+     //   size++;
         
         // if new symbol comes or counter is full
         if(sym!=previous|| counter==255){
@@ -58,18 +58,13 @@ void basicRLC(char *filename){
         }
     }
     
-    ///  think about it, do I need to write this out?????
-  // OutputBits(output_file, counter, 8);
-//OutputBits(output_file, previous, 8);
-  // cout<<(char)previous<<endl;
-    //OutputBits(output_file, 256, 8);
-  //  bit_count+=16;
     
     infile.close();
     CloseOutputBitFile(output_file);
     
-    cout<<"Original: "<<size*8<<" bits"<<endl;
+   // cout<<"Original: "<<size*8<<" bits"<<endl;
     cout<<"Run length compressed size: "<<bit_count<<" bits"<<endl;
+    cout<<"Name of compressed file is: "<<output<<endl;
     
 }
 
@@ -119,13 +114,13 @@ void basicRLDC(char* filename){
 
 void modifiedRLC(char* filename){
     int counter=0;
-
+    int bit_count=0;
     
     // Prepare output file
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
-    strcat(output, "-modi-run-length");
+    strcat(output, "-MRL");
     output_file=OpenOutputBitFile(output);
     
     // Prepare input file
@@ -146,12 +141,15 @@ void modifiedRLC(char* filename){
                     if(previous>=128){
                         OutputBits(output_file, 128+counter, 8);
                         OutputBits(output_file, previous, 8);
+                        bit_count+=16;
                     }else{
                         OutputBits(output_file, previous, 8);
+                        bit_count+=8;
                     }
                 }else{
                     OutputBits(output_file, 128+counter, 8);
                     OutputBits(output_file, previous, 8);
+                    bit_count+=16;
                 }
             counter=1;
             previous=sym;
@@ -164,13 +162,16 @@ void modifiedRLC(char* filename){
     infile.close();
     CloseOutputBitFile(output_file);
     
+    cout<<"Run length compressed size: "<<bit_count<<" bits"<<endl;
+    cout<<"Name of compressed file is: "<<output<<endl;
+    
     
 }
 
 
 void modifiedRLDC(char *filename){
     unsigned char sym;
-    //int bit_count=0;
+    int bit_count=0;
     int counter=0;
     bool isCounter=true;
     
@@ -197,6 +198,7 @@ void modifiedRLDC(char *filename){
             }else{
                 for (int i=0;i<counter;i++){
                     OutputBits(output_file, sym, 8);
+                    bit_count+=8;
                 }
                 isCounter=true;
             }
@@ -204,10 +206,12 @@ void modifiedRLDC(char *filename){
             if(!isCounter){
                 for(int i=0;i<counter;i++){
                     OutputBits(output_file, sym, 8);
+                    bit_count+=8;
                 }
                 isCounter=true;
             }else{
                 OutputBits(output_file, sym, 8);
+                bit_count+=8;
             }
         }
         
@@ -215,5 +219,6 @@ void modifiedRLDC(char *filename){
     
     infile.close();
     CloseOutputBitFile(output_file);
-    
+    cout<<"MRLDC recovered size: "<<bit_count<<" bits"<<endl;
 }
+

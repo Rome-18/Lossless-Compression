@@ -28,3 +28,23 @@ debug/debug
 *.dat-shannon-fano
 
 *.dat-run-length-recov
+
+*.dat-MTF
+
+debug/lossless
+
+*.raw-shannon-fano
+
+*.raw-RL-huffman
+
+*.raw-RL
+
+*.raw-adaptive-huffman
+
+*.raw-MRL
+
+*.raw-RL-adaptive-huffman
+
+*.raw-adaptive-huffman-RL
+
+*.raw-huffman

@@ -87,7 +87,14 @@ void adaptiveCompr(char *filename){
         
         // new symbol,
         if(nodeList[sym]==NULL){
-            temp=new AHNode;
+//            temp=new AHNode;
+//            temp->val=-1;
+//            temp->weight=0;
+//            temp->ID=-1;
+//            temp->left=NULL;
+//            temp->right=NULL;
+//            temp->parent=NULL;
+            
             // first ever symbol, initial tree; add NYA;
 //            if(NYA==NULL){
 //                NYA=new AHNode;
@@ -197,7 +204,20 @@ int getCode2(AHNode *temp, int code, int bit, int *length){
 
 AHNode *addnewNode(AHNode *oldNYA, AHNode *nodeList[], AHNode *nodeTree[], unsigned char sym){
     AHNode *temp=new AHNode;
+    temp->val=-1;
+    temp->weight=0;
+    temp->ID=-1;
+    temp->left=NULL;
+    temp->right=NULL;
+    temp->parent=NULL;
+    
     AHNode *newNYA=new AHNode;
+    newNYA->val=-1;
+    newNYA->weight=0;
+    newNYA->ID=-1;
+    newNYA->left=NULL;
+    newNYA->right=NULL;
+    newNYA->parent=NULL;
     
     temp->ID=oldNYA->ID-1;
     newNYA->ID=oldNYA->ID-2;
@@ -252,8 +272,7 @@ void updateTree(AHNode *temp, AHNode *nodeTree[]){
             }else{
                 targetParent->right=temp;
             }
-            
-            
+  
             // Link target to the temp position
             target->parent=tempParent;
             if(temp==tempParent->left) {
@@ -272,13 +291,9 @@ void updateTree(AHNode *temp, AHNode *nodeTree[]){
             int swap=target->ID;
             target->ID=temp->ID;
             temp->ID=swap;
-
         }
-        
         temp->weight++;
         updateTree(temp->parent, nodeTree);
     }
-    
-    
-    
 }
+
