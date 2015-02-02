@@ -14,9 +14,9 @@
 #include <math.h>
 #include <string>
 #include <fstream>
-#include <queue>
-#include <string.h>
-#include <vector>
+
+
+
 
 using namespace std;
 
@@ -87,41 +87,7 @@ void adaptiveCompr(char *filename){
         
         // new symbol,
         if(nodeList[sym]==NULL){
-//            temp=new AHNode;
-//            temp->val=-1;
-//            temp->weight=0;
-//            temp->ID=-1;
-//            temp->left=NULL;
-//            temp->right=NULL;
-//            temp->parent=NULL;
-            
-            // first ever symbol, initial tree; add NYA;
-//            if(NYA==NULL){
-//                NYA=new AHNode;
-//                
-//                root->left=NYA;
-//                root->right=temp;
-//                
-//                
-//                temp->parent=root;
-//                temp->ID=root->ID-1;
-//                temp->val=sym;
-//                temp->weight=1;
-//                nodeList[sym]=temp;
-//                
-//                NYA->parent=root;
-//                NYA->ID=root->ID-2;
-//                
-//                nodeTree[NYA->ID]=NYA;
-//                nodeTree[temp->ID]=temp;
-//                
-//                root->weight=1;
-//                OutputBit(output_file, 0);
-//                OutputBits(output_file, sym, 8);
-//                bit_count+=9;
-//            }else{
                 codeLength=0;
-               // code=getCode(NYA,0,&codeLength);
                 code=getCode2(NYA,0,0,&codeLength);
                 OutputBits(output_file, code, codeLength);
                 bit_count+=codeLength;
@@ -133,7 +99,6 @@ void adaptiveCompr(char *filename){
 //            }
         }else{// old symbol comes
             codeLength=0;
-            //code=getCode(nodeList[sym], 0, &codeLength);
             code=getCode2(nodeList[sym],0,0,&codeLength);
             OutputBits(output_file, code, codeLength);
             bit_count+=codeLength;
@@ -183,26 +148,23 @@ int getCode2(AHNode *temp, int code, int bit, int *length){
          *length+=1;
         
         if(temp==temp->parent->left){// this node is left node
-            //code = code + (0<<(*length));
-                        code = code << ((*length)-1);
-                        code += bit;
+            
+                code = code << ((*length)-1);
+                code += bit;
             //
                         return getCode2(temp->parent, code, 0, length);
         }else{
-            //code = code + (1<<(*length));
-                        code = code << ((*length)-1);
-                        code += bit;
-            //
-                        return getCode2(temp->parent, code, 1, length);
+                code = code << ((*length)-1);
+                code += bit;
+                return getCode2(temp->parent, code, 1, length);
         }
-        //++(*length);
-        //return getCode(temp->parent, code, 0, length);
     }
 }
 
 
 
 AHNode *addnewNode(AHNode *oldNYA, AHNode *nodeList[], AHNode *nodeTree[], unsigned char sym){
+    // initialize node
     AHNode *temp=new AHNode;
     temp->val=-1;
     temp->weight=0;
@@ -211,6 +173,7 @@ AHNode *addnewNode(AHNode *oldNYA, AHNode *nodeList[], AHNode *nodeTree[], unsig
     temp->right=NULL;
     temp->parent=NULL;
     
+    // initialize new NYA node
     AHNode *newNYA=new AHNode;
     newNYA->val=-1;
     newNYA->weight=0;
