@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     int algorithm=0;
     
     if(argv[1]==NULL||argv[2]==NULL||argv[3]==NULL){
-     //   adaptiveCompr("image.dat.raw");
+        adaptiveCompr("image.dat.raw");
         help();
         return 1;
     }
@@ -111,5 +111,5 @@ void help(){
     cout<<"For Shannon-Fano, Huffman and Adaptive Huffman encoding, follow the format below"<<endl;
     cout<<"./lossless encode [sf/hm/ah] [filename]"<<endl;
     cout<<"For run length encoding and decoding, follow the format below"<<endl;
-    cout<<"./lossless [encode/decode] [rl/mrl] [filename]"<<endl;
+    cout<<"./lossless [encode/decode] [rl/mrl/mtf] [filename]"<<endl;
 }

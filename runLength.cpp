@@ -28,7 +28,7 @@ void basicRLC(char *filename){
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
-    strcat(output, "-RL");
+    strcat(output, "-RL.out");
     output_file=OpenOutputBitFile(output);
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
@@ -80,7 +80,7 @@ void basicRLDC(char* filename){
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
-    strcat(output, "-recov");
+    strcat(output, "-recov.out");
     output_file=OpenOutputBitFile(output);
     
     
@@ -120,7 +120,7 @@ void modifiedRLC(char* filename){
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
-    strcat(output, "-MRL");
+    strcat(output, "-MRL.out");
     output_file=OpenOutputBitFile(output);
     
     // Prepare input file
@@ -181,7 +181,7 @@ void modifiedRLDC(char *filename){
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
-    strcat(output, "-recov");
+    strcat(output, "-recov.out");
     output_file=OpenOutputBitFile(output);
     
     

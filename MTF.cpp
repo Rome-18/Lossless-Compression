@@ -26,7 +26,7 @@ void MTF(char *filename){
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
-    strcat(output, "-MTF");
+    strcat(output, "-MTF.out");
     output_file=OpenOutputBitFile(output);
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
@@ -75,7 +75,7 @@ void MTFD(char *filename){
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
-    strcat(output, "-MTFD");
+    strcat(output, "-recov.out");
     output_file=OpenOutputBitFile(output);
     
     ifstream infile(filename, ios_base::in | ios_base::binary);

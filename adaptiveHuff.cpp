@@ -42,7 +42,7 @@ void adaptiveCompr(char *filename){
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
-    strcat(output, "-adaptive-huffman");
+    strcat(output, "-adaptive-huffman.out");
     output_file=OpenOutputBitFile(output);
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
@@ -226,6 +226,9 @@ void updateTree(AHNode *temp, AHNode *nodeTree[]){
         temp->weight++;
     }else{
         target=findTarget(temp, nodeTree);
+        //Condition#1: target found
+        //Condition#2: target is not the parent of current node
+        //Condition#3: target is not root node
         if(target!=NULL&& target!=temp->parent&& target->parent!=NULL){
             tempParent=temp->parent;
             targetParent=target->parent;

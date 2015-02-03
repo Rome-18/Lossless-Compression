@@ -148,10 +148,10 @@ void HuffCode(HuffmanTable table[], node *root, int code, int bit, int length)
 void doCompression(char* filename, HuffmanTable *table){
     
     int bit_count=0;
-    char *output=new char[32];
+    char *output=new char[64];
     
     strcat(output, filename);
-    strcat(output, "-huffman");
+    strcat(output, "-huffman.out");
     
     BIT_FILE *output_file;
     output_file = OpenOutputBitFile(output);
