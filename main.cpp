@@ -31,6 +31,7 @@ int main(int argc, char *argv[]) {
     int algorithm=0;
     
     if(argv[1]==NULL||argv[2]==NULL||argv[3]==NULL){
+     //   adaptiveCompr("image.dat.raw");
         help();
         return 1;
     }

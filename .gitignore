@@ -48,3 +48,5 @@ debug/lossless
 *.raw-adaptive-huffman-RL
 
 *.raw-huffman
+
+debug/text.dat-MTF-MTFD

@@ -95,8 +95,8 @@ void adaptiveCompr(char *filename){
                 OutputBits(output_file, sym, 8);
                 bit_count+=codeLength;
                 NYA=addnewNode(NYA, nodeList, nodeTree, sym);
-                updateTree(NYA->parent->parent, nodeTree);
-//            }
+                // Put the new added branch to proper place on the tree
+                updateTree(nodeList[sym]->parent->parent, nodeTree);
         }else{// old symbol comes
             codeLength=0;
             code=getCode2(nodeList[sym],0,0,&codeLength);
@@ -182,9 +182,12 @@ AHNode *addnewNode(AHNode *oldNYA, AHNode *nodeList[], AHNode *nodeTree[], unsig
     newNYA->right=NULL;
     newNYA->parent=NULL;
     
+    
+    // Assign ID number to new nodes
     temp->ID=oldNYA->ID-1;
     newNYA->ID=oldNYA->ID-2;
     
+    // Link node
     temp->weight=1;
     temp->parent=oldNYA;
     temp->val=sym;
