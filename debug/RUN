@@ -1,0 +1,21 @@
+all: run-shannon run-huffman run-ahuffman
+
+
+run-shannon:
+	@echo ">>>>>Shannon-fano"
+	./lossless encode sf text.dat
+	./lossless encode sf audio.dat
+	./lossless encode sf binary.dat.raw
+	./lossless encode sf image.dat.raw
+
+run-huffman:
+	./lossless encode hm text.dat
+	./lossless encode hm audio.dat
+	./lossless encode hm binary.dat.raw
+	./lossless encode hm image.dat.raw
+
+run-ahuffman:
+	./lossless encode ah text.dat
+	./lossless encode ah audio.dat
+	./lossless encode ah binary.dat.raw
+	./lossless encode ah image.dat.raw

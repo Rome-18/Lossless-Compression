@@ -5,10 +5,10 @@
 #Email: liu260@usc.edu
 #compiled on MAC OSX with g++
 
-All: LosslessDataCompression
-LosslessDataCompression:
+compile:
 
 	@echo ">>compiling the program" 
+
 	g++ -c bitio.cpp
 
 	g++ -c Huffman.cpp 
@@ -28,8 +28,10 @@ LosslessDataCompression:
 
 	@echo ">>Compile finished."
 	@echo ">>Instruction on excuting the program."
-	@echo ">>>>>>>>>>>>>Run the program with correct format and parameters"
-	@echo ">>>>>>>>>>>>>For Shannon-Fano, Huffman and Adaptive Huffman encoding, follow the format below"
-	@echo ">>>>>>>>>>>>>./lossless encode [sf/hm/ah] [filename]"
-	@echo ">>>>>>>>>>>>>For run length encoding and decoding, follow the format below"
-	@echo ">>>>>>>>>>>>>./lossless [encode/decode] [rl/mrl] [filename]"
+	@echo ">>Run the program with correct format and parameters"
+	@echo ">>For Shannon-Fano, Huffman and Adaptive Huffman encoding, follow the format below"
+	@echo ">>  ./lossless encode [sf/hm/ah] [filename]"
+	@echo ">>For run length encoding and decoding, follow the format below"
+	@echo ">>  ./lossless [encode/decode] [rl/mrl/mtf] [filename]"
+	@echo ">>Or cd to debug folder, use make -f RUN to execute the batch run"
+
