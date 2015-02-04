@@ -16,8 +16,6 @@
 #include <fstream>
 
 
-
-
 using namespace std;
 
 void adaptiveCompr(char *filename){
@@ -39,10 +37,13 @@ void adaptiveCompr(char *filename){
     // add root to tree;
     nodeTree[root->ID]=root;
     
+
+    
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
     strcat(output, "-adaptive-huffman.out");
+    
     output_file=OpenOutputBitFile(output);
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
@@ -94,9 +95,17 @@ void adaptiveCompr(char *filename){
                 codeLength=0;
                 OutputBits(output_file, sym, 8);
                 bit_count+=codeLength;
+            
+                // Create new NYA node and node for new symbol, add them to the tree.
                 NYA=addnewNode(NYA, nodeList, nodeTree, sym);
+            
                 // Put the new added branch to proper place on the tree
+                // This update is special case, new node has weight of 1, it will always on the left
+                // child of it's parent, according to the NYA mechanism.
+                // The only existing node with weight change is new node's parent's parent
+                // It's weight is increase by 1
                 updateTree(nodeList[sym]->parent->parent, nodeTree);
+            
         }else{// old symbol comes
             codeLength=0;
             code=getCode2(nodeList[sym],0,0,&codeLength);
@@ -206,6 +215,8 @@ AHNode *addnewNode(AHNode *oldNYA, AHNode *nodeList[], AHNode *nodeTree[], unsig
 }
 
 
+// Traverse the tree nodes with ID larger than the new node,
+// Find the one with same weight and largest ID to swap
 AHNode *findTarget( AHNode *temp, AHNode *nodeTree[]){
     AHNode *target=NULL;
     for (int i=temp->ID+1;i<511;i++){
@@ -226,10 +237,9 @@ void updateTree(AHNode *temp, AHNode *nodeTree[]){
         temp->weight++;
     }else{
         target=findTarget(temp, nodeTree);
-        //Condition#1: target found
-        //Condition#2: target is not the parent of current node
-        //Condition#3: target is not root node
-        if(target!=NULL&& target!=temp->parent&& target->parent!=NULL){
+        //Condition#1: target found, otherwise, no need to swap
+        //Condition#2: target is not the parent of current node, if it is, no need to swap
+        if(target!=NULL&& target!=temp->parent){
             tempParent=temp->parent;
             targetParent=target->parent;
             

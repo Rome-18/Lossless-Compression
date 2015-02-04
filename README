@@ -3,11 +3,19 @@
 #Name: Yuan Liu
 #ID: 2521-8491-85
 #Email: liu260@usc.edu
-#compiled on MAC OSX with g++
+#compiled on Nunki.usc.edu with g++
+
+
+#Known Issue:
+#      When I run this program on my local machine, Mac OSX 10.10, Xcode 6.1.1 and g++ 4.2.1
+#      the adaptive huffman encoder  will produce error output file, with size larger than the expected ones.
+#      It will only produce the correct output on the first run after a new compile.
+#      However, this problem is not existing on Nunki server, so I do all the test and record the result on Nunki.
+
 
 compile:
 
-	@echo ">>compiling the program" 
+	@echo "*compiling the program" 
 
 	g++ -c bitio.cpp
 
@@ -25,13 +33,13 @@ compile:
 
 	g++ -o debug/lossless main.o Huffman.o shannon.o adaptiveHuff.o runLength.o MTF.o bitio.o
 
-
-	@echo ">>Compile finished."
-	@echo ">>Instruction on excuting the program."
-	@echo ">>Run the program with correct format and parameters"
-	@echo ">>For Shannon-Fano, Huffman and Adaptive Huffman encoding, follow the format below"
+	@echo "*Compile finished."
+	@echo "*Instruction on excuting the program."
+	@echo "*Executable program will be in the /debug folder"
+	@echo "*Run the program with correct format and parameters"
+	@echo "*For Shannon-Fano, Huffman and Adaptive Huffman encoding, follow the format below"
 	@echo ">>  ./lossless encode [sf/hm/ah] [filename]"
-	@echo ">>For run length encoding and decoding, follow the format below"
+	@echo "*For run length encoding and decoding, follow the format below"
 	@echo ">>  ./lossless [encode/decode] [rl/mrl/mtf] [filename]"
 	@echo ">>Or cd to debug folder, use make -f RUN to execute the batch run"
 

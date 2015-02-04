@@ -191,6 +191,7 @@ void modifiedRLDC(char *filename){
     while(infile.good()){
         sym=infile.get();
         
+        // if symbol>127, it means the MSB is 1, otherwise, MSB=0
         if(sym>127){
             if(isCounter){
                 counter=sym-128;
