@@ -20,7 +20,7 @@ using namespace std;
 
 void MTF(char *filename){
     
-    int bit_count;
+    int bit_count=0;
     int table[256]={};
     
     BIT_FILE *output_file;
@@ -32,34 +32,45 @@ void MTF(char *filename){
     ifstream infile(filename, ios_base::in | ios_base::binary);
     unsigned char current;
 
-    for (int i=0;i<256;i++){
-        table[i]=i;
+    // Initial table
+    for (int index=0;index<256;index++){
+        table[index]=index;
     }
+   // cout<<endl;
+    int idx;
     
-    // from second symbol to EOF
+    //
     while(infile.good()){
+        
         current=infile.get();
-        int i;
-        // Find the target
-        for (i=0;i<256;i++){
-            if(table[i]==current){
-                OutputBits(output_file, i, 8);
+        if(current==255){
+            break;
+        }
+
+//        // Move the table back by 1, to make room for MTF element
+//
+        for(idx=0;idx<256;idx++){
+            if(table[idx]==static_cast<int>(current)){
+                OutputBits(output_file, (unsigned long)idx, 8);
+                cout<<" "<<table[idx]<<current;
                 bit_count+=8;
-              //  break;
+                break;
             }
         }
         
-        // Move the table back by 1, to make room for MTF element
-        while(i-=1){
-            table[i+1]=table[i];
+        
+        for(;idx!=0;--idx){
+            table[idx]=table[idx-1];
         }
         
         // Move to front;
+      
         table[0]=current;
+  
         
     }
-    
-    
+
+    cout<<endl;
     infile.close();
     CloseOutputBitFile(output_file);
     
@@ -86,18 +97,24 @@ void MTFD(char *filename){
     }
     
     int i;
-
+    int idx;
     while(infile.good()){
         i=infile.get();
         
-        cout<<i<<endl;
+        if(i<0){
+            break;
+        }
+        
+       // cout<<i<<endl;
         
         OutputBits(output_file, table[i], 8);
         current=table[i];
-        
-        while(i--&&i>=0){
-            table[i+1]=table[i];
+        idx=i;
+       // cout<<idx<<endl;
+        for(;idx!=0;--idx){
+            table[idx]=table[idx-1];
         }
+
         
         table[0]=current;
     }

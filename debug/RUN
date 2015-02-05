@@ -1,4 +1,4 @@
-all: run-shannon run-huffman run-ahuffman
+all: run-shannon run-huffman run-ahuffman run-runlength run-modrunlength
 
 
 run-shannon:
@@ -19,3 +19,15 @@ run-ahuffman:
 	./lossless encode ah audio.dat
 	./lossless encode ah binary.dat.raw
 	./lossless encode ah image.dat.raw
+
+run-runlength:
+	./lossless encode rl text.dat
+	./lossless encode rl audio.dat
+	./lossless encode rl binary.dat.raw
+	./lossless encode rl image.dat.raw
+
+run-modrunlength:
+	./lossless encode mrl text.dat
+	./lossless encode mrl audio.dat
+	./lossless encode mrl binary.dat.raw
+	./lossless encode mrl image.dat.raw

@@ -167,3 +167,4 @@ void FilePrintBinary( FILE *file, unsigned int code, int bits)
 }
 
 /*************************** End of BITIO.C **************************/
+

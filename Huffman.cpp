@@ -148,6 +148,7 @@ void HuffCode(HuffmanTable table[], node *root, int code, int bit, int length)
 void doCompression(char* filename, HuffmanTable *table){
     
     int bit_count=0;
+    int size=0;
     char *output=new char[64];
     
     strcat(output, filename);
@@ -164,6 +165,12 @@ void doCompression(char* filename, HuffmanTable *table){
     while(infile.good())
     {
         sym=infile.get();
+        
+//        if(sym=='255'){
+//            break;
+//        }
+        
+        size+=8;
         bit_count+=table[sym].codeLength;
         OutputBits(output_file, table[sym].code, table[sym].codeLength);
         
@@ -171,6 +178,8 @@ void doCompression(char* filename, HuffmanTable *table){
     
     infile.close();
     CloseOutputBitFile(output_file);
+    cout<<"Original size is: "<<size/8<<endl;
     cout<<"Huffman compressed size: "<<bit_count<<" bits"<<endl;
     
 }
+

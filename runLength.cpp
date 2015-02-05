@@ -136,21 +136,27 @@ void modifiedRLC(char* filename){
     // from 2nd symbol to EOF
     while(infile.good()){
         sym=infile.get();
+        //new symbol comes or counter reaches max count
         if(sym!=previous||counter==127){
+            //if new symbol scenario
                 if(counter==1){
+                    //if symbol has MSB=1, output HEX 80+counter to avoid confusion
                     if(previous>=128){
                         OutputBits(output_file, 128+counter, 8);
                         OutputBits(output_file, previous, 8);
                         bit_count+=16;
+                        //if MSB=0, just output symbol, no waste on coding counter = 1
                     }else{
                         OutputBits(output_file, previous, 8);
                         bit_count+=8;
                     }
+                    //counter max scenario, output file
                 }else{
                     OutputBits(output_file, 128+counter, 8);
                     OutputBits(output_file, previous, 8);
                     bit_count+=16;
                 }
+            //reset counter
             counter=1;
             previous=sym;
         }
@@ -162,7 +168,7 @@ void modifiedRLC(char* filename){
     infile.close();
     CloseOutputBitFile(output_file);
     
-    cout<<"Run length compressed size: "<<bit_count<<" bits"<<endl;
+    cout<<"Modified run length compressed size: "<<bit_count<<" bits"<<endl;
     cout<<"Name of compressed file is: "<<output<<endl;
     
     

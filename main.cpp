@@ -32,6 +32,9 @@ int main(int argc, char *argv[]) {
     
     if(argv[1]==NULL||argv[2]==NULL||argv[3]==NULL){
         ///adaptiveCompr("image.dat.raw");
+        MTF("text.dat");
+        MTFD("text.dat-MTF.out");
+        huffman_routine("text.dat");
         help();
         return 1;
     }
