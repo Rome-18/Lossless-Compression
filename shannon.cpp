@@ -176,14 +176,14 @@ void doCompression(char* filename, ShannonTable *table){
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
     unsigned char sym;
-    //= infile.get();
+    // first character;
+    sym= infile.get();
     
     while(infile.good())
     {
-        sym=infile.get();
         OutputBits(output_file, table[sym].code, table[sym].codeLength);
         bit_count+=table[sym].codeLength;
-        
+        sym=infile.get();
     }
     
     infile.close();

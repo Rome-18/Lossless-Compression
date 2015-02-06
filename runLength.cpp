@@ -33,7 +33,6 @@ void basicRLC(char *filename){
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
     unsigned char sym;
-    
     // first symbol
     sym=infile.get();
     previous=sym;

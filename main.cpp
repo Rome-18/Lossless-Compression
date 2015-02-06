@@ -13,6 +13,7 @@
 #include "runLength.h"
 #include "adaptiveHuff.h"
 #include "MTF.h"
+#include "statistics.h"
 
 
 using namespace std;
@@ -31,10 +32,11 @@ int main(int argc, char *argv[]) {
     int algorithm=0;
     
     if(argv[1]==NULL||argv[2]==NULL||argv[3]==NULL){
-        ///adaptiveCompr("image.dat.raw");
+        //getInfo("text.dat");
+        //adaptiveCompr("image.dat.raw");
         MTF("text.dat");
         MTFD("text.dat-MTF.out");
-        huffman_routine("text.dat");
+        //shannon_routine("text.dat");
         help();
         return 1;
     }

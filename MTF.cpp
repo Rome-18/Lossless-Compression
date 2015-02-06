@@ -31,34 +31,34 @@ void MTF(char *filename){
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
     unsigned char current;
+    
+    // First symbol
+    current=infile.get();
 
     // Initial table
     for (int index=0;index<256;index++){
         table[index]=index;
     }
-   // cout<<endl;
+
     int idx;
     
     //
     while(infile.good()){
         
-        current=infile.get();
-        if(current==255){
-            break;
-        }
 
-//        // Move the table back by 1, to make room for MTF element
-//
+       
+        // Find the symbol index in table
         for(idx=0;idx<256;idx++){
             if(table[idx]==static_cast<int>(current)){
-                OutputBits(output_file, (unsigned long)idx, 8);
-                cout<<" "<<table[idx]<<current;
+                OutputBits(output_file, (unsigned int)idx, 8);
+               // cout<<" "<<table[idx]<<current;
                 bit_count+=8;
                 break;
             }
         }
         
-        
+
+        // Move the table back by 1, to make room for MTF element
         for(;idx!=0;--idx){
             table[idx]=table[idx-1];
         }
@@ -66,58 +66,68 @@ void MTF(char *filename){
         // Move to front;
       
         table[0]=current;
-  
+        // get new symbol;
+        current=infile.get();
         
     }
+    
 
-    cout<<endl;
+    //cout<<endl;
     infile.close();
     CloseOutputBitFile(output_file);
     
-    cout<<"MTF encoding processed size: "<<bit_count<<" bits"<<endl;
+    
+    cout<<"MTF transformation processed size: "<<bit_count<<" bits"<<endl;
     
 }
 
 void MTFD(char *filename){
     unsigned char current;
-    int table[256]={};
-
+    unsigned char table[256]={};
+    int bit_count=0;
     
     BIT_FILE *output_file;
     char *output=new char[64];
     strcat(output, filename);
     strcat(output, "-recov.out");
     output_file=OpenOutputBitFile(output);
-    
-    ifstream infile(filename, ios_base::in | ios_base::binary);
   
-    
+    // Initialize table
     for (int i=0;i<256;i++){
         table[i]=i;
     }
     
-    int i;
+    ifstream infile(filename, ios_base::in | ios_base::binary);
+  
+    
+    int input;
+    // First code
+    input=infile.get();
+    
     int idx;
     while(infile.good()){
-        i=infile.get();
-        
-        if(i<0){
-            break;
-        }
         
        // cout<<i<<endl;
+        current=table[input];
+        OutputBits(output_file, current, 8);
+        bit_count+=8;
         
-        OutputBits(output_file, table[i], 8);
-        current=table[i];
-        idx=i;
-       // cout<<idx<<endl;
+        idx=input;
         for(;idx!=0;--idx){
             table[idx]=table[idx-1];
         }
-
-        
+       // cout<<input<<"is "<<current<<endl;
+ 
         table[0]=current;
+        // Read new symbol;
+        input=infile.get();
+        //cout<<input;
     }
+    
+    cout<<endl;
+    cout<<endl;
+    cout<<"MTF recovered size: "<<bit_count<<" bits"<<endl;
+    
     
     infile.close();
     CloseOutputBitFile(output_file);

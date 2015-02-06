@@ -49,6 +49,9 @@ void adaptiveCompr(char *filename){
     ifstream infile(filename, ios_base::in | ios_base::binary);
     unsigned char sym;
     
+    
+    
+    
     // Read in first symbol of the input file
     sym=infile.get();
     temp=new AHNode;
@@ -240,39 +243,78 @@ void updateTree(AHNode *temp, AHNode *nodeTree[]){
         //Condition#1: target found, otherwise, no need to swap
         //Condition#2: target is not the parent of current node, if it is, no need to swap
         if(target!=NULL&& target!=temp->parent){
-            tempParent=temp->parent;
-            targetParent=target->parent;
             
+            swapNode(temp, target, nodeTree);
             
-            // Link temp to target position
-            temp->parent=targetParent;
-            if(target==targetParent->left){
-                targetParent->left=temp;
-            }else{
-                targetParent->right=temp;
-            }
-  
-            // Link target to the temp position
-            target->parent=tempParent;
-            if(temp==tempParent->left) {
-                tempParent->left=target;
-            }else{
-                tempParent->right=target;
-            }
-            
-            
-            // update in tree
-            nodeTree[temp->ID]=target;
-            nodeTree[target->ID]=temp;
-            
-            
-            // update ID information
-            int swap=target->ID;
-            target->ID=temp->ID;
-            temp->ID=swap;
+//            tempParent=temp->parent;
+//            targetParent=target->parent;
+//            // Link temp to target position
+//            temp->parent=targetParent;
+//            if(target==targetParent->left){
+//                targetParent->left=temp;
+//            }else{
+//                targetParent->right=temp;
+//            }
+//  
+//            // Link target to the temp position
+//            target->parent=tempParent;
+//            if(temp==tempParent->left) {
+//                tempParent->left=target;
+//            }else{
+//                tempParent->right=target;
+//            }
+//            
+//            
+//            // update in tree
+//            nodeTree[temp->ID]=target;
+//            nodeTree[target->ID]=temp;
+//            
+//            
+//            // update ID information
+//            int swap=target->ID;
+//            target->ID=temp->ID;
+//            temp->ID=swap;
         }
         temp->weight++;
         updateTree(temp->parent, nodeTree);
     }
+}
+
+void swapNode(AHNode *temp, AHNode *target, AHNode *nodeTree[]){
+    //AHNode *target;
+    AHNode *tempParent;
+    AHNode *targetParent;
+    
+    
+    tempParent=temp->parent;
+    targetParent=target->parent;
+    // Link temp to target position
+    temp->parent=targetParent;
+    if(target==targetParent->left){
+        targetParent->left=temp;
+    }else{
+        targetParent->right=temp;
+    }
+    
+    // Link target to the temp position
+    target->parent=tempParent;
+    if(temp==tempParent->left) {
+        tempParent->left=target;
+    }else{
+        tempParent->right=target;
+    }
+    
+    
+    // update in tree
+    nodeTree[temp->ID]=target;
+    nodeTree[target->ID]=temp;
+    
+    
+    // update ID information
+    int swap=target->ID;
+    target->ID=temp->ID;
+    temp->ID=swap;
+
+    
 }
 

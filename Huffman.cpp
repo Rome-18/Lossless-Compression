@@ -70,11 +70,13 @@ void char_count(char *input,int *frequency){
     ifstream infile(input, ios_base::in | ios_base::binary);
     //unsigned char sym;
     unsigned char sym;
-    //= infile.get();
+    
+    sym= infile.get();
     while(infile.good())
     {
-        sym=infile.get();
         frequency[sym]++;
+        sym=infile.get();
+
     }
     
     infile.close();
@@ -94,7 +96,7 @@ Node* build_tree(int nodeNum, int *frequency){
             array[nodeidx]->weight=frequency[idx];
             array[nodeidx]->left=NULL;
             array[nodeidx]->right=NULL;
-          //  array[nodeidx]->parent=NULL;
+            //  array[nodeidx]->parent=NULL;
             nodeQueue.push(array[nodeidx]);
             nodeidx++;
         }
@@ -160,25 +162,19 @@ void doCompression(char* filename, HuffmanTable *table){
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
     unsigned char sym;
-    //= infile.get();
+    sym= infile.get();
     
     while(infile.good())
     {
-        sym=infile.get();
-        
-//        if(sym=='255'){
-//            break;
-//        }
-        
         size+=8;
         bit_count+=table[sym].codeLength;
         OutputBits(output_file, table[sym].code, table[sym].codeLength);
-        
+        sym=infile.get();
     }
     
     infile.close();
     CloseOutputBitFile(output_file);
-    cout<<"Original size is: "<<size/8<<endl;
+    cout<<"Original size is: "<<size/8<<" bytes"<<endl;
     cout<<"Huffman compressed size: "<<bit_count<<" bits"<<endl;
     
 }
