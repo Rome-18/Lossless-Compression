@@ -19,6 +19,8 @@ compile:
 
 	g++ -c bitio.cpp
 
+	g++ -c statistics.cpp
+
 	g++ -c Huffman.cpp 
 
 	g++ -c shannon.cpp
@@ -31,12 +33,14 @@ compile:
 
 	g++ -c main.cpp
 
-	g++ -o debug/lossless main.o Huffman.o shannon.o adaptiveHuff.o runLength.o MTF.o bitio.o
+	g++ -o debug/lossless main.o Huffman.o shannon.o adaptiveHuff.o runLength.o MTF.o statistics.o bitio.o
 
 	@echo "*Compile finished."
 	@echo "*Instruction on excuting the program."
 	@echo "*Executable program will be in the /debug folder"
 	@echo "*Run the program with correct format and parameters"
+	@echo "*For data statistics, follow the format below"
+	@echo ">>  ./lossless [filename]"
 	@echo "*For Shannon-Fano, Huffman and Adaptive Huffman encoding, follow the format below"
 	@echo ">>  ./lossless encode [sf/hm/ah] [filename]"
 	@echo "*For run length encoding and decoding, follow the format below"

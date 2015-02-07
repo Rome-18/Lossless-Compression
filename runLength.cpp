@@ -111,6 +111,8 @@ void basicRLDC(char* filename){
     
 }
 
+
+
 void modifiedRLC(char* filename){
     int counter=0;
     int bit_count=0;
@@ -135,10 +137,12 @@ void modifiedRLC(char* filename){
     // from 2nd symbol to EOF
     while(infile.good()){
         sym=infile.get();
+        
         //new symbol comes or counter reaches max count
         if(sym!=previous||counter==127){
             //if new symbol scenario
                 if(counter==1){
+                    
                     //if symbol has MSB=1, output HEX 80+counter to avoid confusion
                     if(previous>=128){
                         OutputBits(output_file, 128+counter, 8);

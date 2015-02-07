@@ -23,7 +23,7 @@ using namespace std;
 
 void getInfo(char *filename){
     double freq[256]={};
-    double sum=0;
+    //double sum=0;
     
     relative_freq(filename, freq);
     double entropy=0;

@@ -50,8 +50,10 @@ void adaptiveCompr(char *filename){
     unsigned char sym;
     
     
-    
-    
+    ///////////////////////////
+    //  Process the first symbol as a special case,
+    //  Since no tree update is involved in this stage, just initialize the tree and add the root node, with NYA
+    ///////////////////////////
     // Read in first symbol of the input file
     sym=infile.get();
     temp=new AHNode;
@@ -83,9 +85,10 @@ void adaptiveCompr(char *filename){
     bit_count+=9;
     
     
-    
-    
-    
+    ///////////////////////////
+    //  From the second symbol to the EOF
+    //  
+    ///////////////////////////
     while(infile.good()){
         sym=infile.get();
         
@@ -103,11 +106,11 @@ void adaptiveCompr(char *filename){
                 NYA=addnewNode(NYA, nodeList, nodeTree, sym);
             
                 // Put the new added branch to proper place on the tree
-                // This update is special case, new node has weight of 1, it will always on the left
-                // child of it's parent, according to the NYA mechanism.
-                // The only existing node with weight change is new node's parent's parent
+                // This update is a special case, new node has weight of 1, to be added to the old NYA's right child
+                // The nearest existing node with weight change is new node's parent
                 // It's weight is increase by 1
-                updateTree(nodeList[sym]->parent->parent, nodeTree);
+                // using Node->parent instead of Node as input will save one resursion on the update
+                updateTree(nodeList[sym]->parent, nodeTree);
             
         }else{// old symbol comes
             codeLength=0;
@@ -118,9 +121,6 @@ void adaptiveCompr(char *filename){
             updateTree(nodeList[sym], nodeTree);
             
         }
-        
-        
-        
     }
     
     cout<<"Adaptive Huffman compressed size: "<<bit_count<<" bits"<<endl;
@@ -131,23 +131,6 @@ void adaptiveCompr(char *filename){
 }
 
 
-
-// A bottom-up mechanism to get codeword
-int getCode(AHNode *temp, int code, int *codelength){
-    if (temp->parent==NULL){ // node is root node
-        return code;
-    }else{
-        
-        if (temp==temp->parent->left){
-            code=code+(0<<(*codelength));
-        }else{
-            code=code+(1<<(*codelength));
-        }
-        ++(*codelength);
-        return getCode(temp->parent, code, codelength);
-    }
-    
-}
 
 
 int getCode2(AHNode *temp, int code, int bit, int *length){
@@ -230,11 +213,9 @@ AHNode *findTarget( AHNode *temp, AHNode *nodeTree[]){
     return target;
 }
 
-
+// Recursive function to update the tree, it update weights, swap nodes
 void updateTree(AHNode *temp, AHNode *nodeTree[]){
     AHNode *target;
-    AHNode *tempParent;
-    AHNode *targetParent;
     
     if(temp->parent==NULL){
         temp->weight++;
@@ -243,37 +224,7 @@ void updateTree(AHNode *temp, AHNode *nodeTree[]){
         //Condition#1: target found, otherwise, no need to swap
         //Condition#2: target is not the parent of current node, if it is, no need to swap
         if(target!=NULL&& target!=temp->parent){
-            
             swapNode(temp, target, nodeTree);
-            
-//            tempParent=temp->parent;
-//            targetParent=target->parent;
-//            // Link temp to target position
-//            temp->parent=targetParent;
-//            if(target==targetParent->left){
-//                targetParent->left=temp;
-//            }else{
-//                targetParent->right=temp;
-//            }
-//  
-//            // Link target to the temp position
-//            target->parent=tempParent;
-//            if(temp==tempParent->left) {
-//                tempParent->left=target;
-//            }else{
-//                tempParent->right=target;
-//            }
-//            
-//            
-//            // update in tree
-//            nodeTree[temp->ID]=target;
-//            nodeTree[target->ID]=temp;
-//            
-//            
-//            // update ID information
-//            int swap=target->ID;
-//            target->ID=temp->ID;
-//            temp->ID=swap;
         }
         temp->weight++;
         updateTree(temp->parent, nodeTree);
@@ -281,10 +232,8 @@ void updateTree(AHNode *temp, AHNode *nodeTree[]){
 }
 
 void swapNode(AHNode *temp, AHNode *target, AHNode *nodeTree[]){
-    //AHNode *target;
     AHNode *tempParent;
     AHNode *targetParent;
-    
     
     tempParent=temp->parent;
     targetParent=target->parent;

@@ -31,15 +31,26 @@ int main(int argc, char *argv[]) {
     bool isEncoding=true;
     int algorithm=0;
     
-    if(argv[1]==NULL||argv[2]==NULL||argv[3]==NULL){
-        //getInfo("text.dat");
-        //adaptiveCompr("image.dat.raw");
-        MTF("text.dat");
-        MTFD("text.dat-MTF.out");
-        //shannon_routine("text.dat");
+    if(argv[1]!=NULL&&argv[2]==NULL){
+        filename=argv[1];
+        getInfo(filename);
         help();
         return 1;
     }
+    
+    //print help information and quit if no parameters, print statistics if only filename presents
+    if(argv[1]==NULL||argv[2]==NULL||argv[3]==NULL){
+       // filename=argv[1];
+      //  getInfo(filename);
+        adaptiveCompr("image.dat.raw");
+        help();
+        return 1;
+    }
+    //Function to calculate sumbol frequencies and entropy
+    
+    
+    
+    
     if(strcmp(argv[1],"encode")==0){
         isEncoding=true;
     }else if(strcmp(argv[1],"decode")==0){
@@ -89,6 +100,7 @@ int main(int argc, char *argv[]) {
 void runAlgo(bool isEncode, int algo, char* filename){
     if(isEncode){
         if(algo==0){
+            
             shannon_routine(filename);
         }else if(algo==1){
             huffman_routine(filename);
@@ -113,6 +125,8 @@ void runAlgo(bool isEncode, int algo, char* filename){
 }
 
 void help(){
+    cout<<"For data statistics: frequencies, entropy"<<endl;
+    cout<<"./lossless [filename]"<<endl;
     cout<<"For Shannon-Fano, Huffman and Adaptive Huffman encoding, follow the format below"<<endl;
     cout<<"./lossless encode [sf/hm/ah] [filename]"<<endl;
     cout<<"For run length encoding and decoding, follow the format below"<<endl;
