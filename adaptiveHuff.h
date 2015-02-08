@@ -25,7 +25,6 @@ typedef struct ahnode{
 
 
 void adaptiveCompr(char *filename);
-//int getCode(AHNode *temp, int code, int *codelength);
 int getCode2(AHNode *temp, int code, int bit, int *length);
 AHNode *addnewNode(AHNode *oldNYA, AHNode *nodeList[], AHNode *nodeTree[], unsigned char sym);
 AHNode *findTarget( AHNode *temp, AHNode *nodeTree[]);

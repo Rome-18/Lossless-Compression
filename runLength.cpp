@@ -143,7 +143,8 @@ void modifiedRLC(char* filename){
             //if new symbol scenario
                 if(counter==1){
                     
-                    //if symbol has MSB=1, output HEX 80+counter to avoid confusion
+                    //If symbol has MSB=1, output HEX 80+counter to avoid confusion, since 80 is the first number with
+                    //MSB=1
                     if(previous>=128){
                         OutputBits(output_file, 128+counter, 8);
                         OutputBits(output_file, previous, 8);
@@ -203,9 +204,11 @@ void modifiedRLDC(char *filename){
         // if symbol>127, it means the MSB is 1, otherwise, MSB=0
         if(sym>127){
             if(isCounter){
-                counter=sym-128;
+                counter=sym-128; // since MSB is used as indicator/ flag, counter has only 7bits, value no larger than
+                                 // 128, so if the incoming value is larger than 128,  it must be a counter+128 or a
+                                 //symbol with MSB=1
                 isCounter=false;
-            }else{
+            }else{ // output symbol with MSB=1
                 for (int i=0;i<counter;i++){
                     OutputBits(output_file, sym, 8);
                     bit_count+=8;
@@ -219,7 +222,7 @@ void modifiedRLDC(char *filename){
                     bit_count+=8;
                 }
                 isCounter=true;
-            }else{
+            }else{  // out put symbol with MSB=0
                 OutputBits(output_file, sym, 8);
                 bit_count+=8;
             }

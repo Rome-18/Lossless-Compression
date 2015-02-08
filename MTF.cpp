@@ -76,7 +76,6 @@ void MTF(char *filename){
     infile.close();
     CloseOutputBitFile(output_file);
     
-    cout<<endl;
     cout<<"MTF transformation processed size: "<<bit_count<<" bits"<<endl;
     
 }
@@ -124,12 +123,10 @@ void MTFD(char *filename){
         //cout<<input;
     }
     
-
-    cout<<"MTF recovered size: "<<bit_count<<" bits"<<endl;
-    
-    
     infile.close();
     CloseOutputBitFile(output_file);
+    
+    cout<<"MTF recovered size: "<<bit_count<<" bits"<<endl;
     
 }
 

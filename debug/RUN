@@ -1,4 +1,4 @@
-all: run-shannon run-huffman run-ahuffman run-runlength run-modrunlength run-mtf run-mtf-decode
+all: run-shannon run-huffman run-ahuffman run-runlength run-runlenght-decode run-runlenght-decode run-modrunlength run-modrunlenght-decode run-mtf run-mtf-decode run-MRL-preprocessed run-MTF-preprocessed
 
 
 run-shannon:
@@ -33,6 +33,14 @@ run-runlength:
 	./lossless encode rl binary.dat.raw
 	./lossless encode rl image.dat.raw
 
+run-runlenght-decode:
+	@echo ""
+	@echo ">>>>>Run-Length-decode>>>>>>>>>>>>>>>>>>"
+	./lossless decode rl text.dat-RL.out
+	./lossless decode rl audio.dat-RL.out
+	./lossless decode rl binary.dat.raw-RL.out
+	./lossless decode rl image.dat.raw-RL.out
+
 run-modrunlength:
 	@echo ""
 	@echo ">>>>>>Mod-Run-Lengh>>>>>>>>>>>>>>>>>>>>>>"
@@ -40,6 +48,14 @@ run-modrunlength:
 	./lossless encode mrl audio.dat
 	./lossless encode mrl binary.dat.raw
 	./lossless encode mrl image.dat.raw
+
+run-modrunlenght-decode:
+	@echo ""
+	@echo ">>>>>Mod-Run-Length-decode>>>>>>>>>>>>>>>>>>"
+	./lossless decode mrl text.dat-MRL.out
+	./lossless decode mrl audio.dat-MRL.out
+	./lossless decode mrl binary.dat.raw-MRL.out
+	./lossless decode mrl image.dat.raw-MRL.out
 
 run-mtf:
 	@echo ""
@@ -56,3 +72,35 @@ run-mtf-decode:
 	./lossless decode mtf audio.dat-MTF.out
 	./lossless decode mtf binary.dat.raw-MTF.out
 	./lossless decode mtf image.dat.raw-MTF.out
+
+run-MRL-preprocessed:
+	@echo ""
+	@echo ">>>>>MRL-Preprocessed>>>>>>>>>>>>>>>>>>"
+	./lossless encode sf text.dat-MRL.out
+	./lossless encode hm text.dat-MRL.out
+	./lossless encode ah text.dat-MRL.out
+	./lossless encode sf audio.dat-MRL.out
+	./lossless encode hm audio.dat-MRL.out
+	./lossless encode ah audio.dat-MRL.out
+	./lossless encode sf binary.dat.raw-MRL.out
+	./lossless encode hm binary.dat.raw-MRL.out
+	./lossless encode ah binary.dat.raw-MRL.out
+	./lossless encode sf image.dat.raw-MRL.out
+	./lossless encode hm image.dat.raw-MRL.out
+	./lossless encode ah image.dat.raw-MRL.out
+
+run-MTF-preprocessed:
+	@echo ""
+	@echo ">>>>>>MTF-Preprocessed>>>>>>>>>>>>>>>>"
+	./lossless encode sf text.dat-MTF.out
+	./lossless encode hm text.dat-MTF.out
+	./lossless encode ah text.dat-MTF.out
+	./lossless encode sf audio.dat-MTF.out
+	./lossless encode hm audio.dat-MTF.out
+	./lossless encode ah audio.dat-MTF.out
+	./lossless encode sf binary.dat.raw-MTF.out
+	./lossless encode hm binary.dat.raw-MTF.out
+	./lossless encode ah binary.dat.raw-MTF.out
+	./lossless encode sf image.dat.raw-MTF.out
+	./lossless encode hm image.dat.raw-MTF.out
+	./lossless encode ah image.dat.raw-MTF.out

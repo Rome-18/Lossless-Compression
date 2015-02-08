@@ -87,7 +87,7 @@ void adaptiveCompr(char *filename){
     
     ///////////////////////////
     //  From the second symbol to the EOF
-    //  
+    //  Need to update the tree every time a symbols comes, no matter new or old, do inset node for new symbol
     ///////////////////////////
     while(infile.good()){
         sym=infile.get();
@@ -144,10 +144,9 @@ int getCode2(AHNode *temp, int code, int bit, int *length){
         
         if(temp==temp->parent->left){// this node is left node
             
-                code = code << ((*length)-1);
-                code += bit;
-            //
-                        return getCode2(temp->parent, code, 0, length);
+                code = code << ((*length)-1); //shift bits
+                code += bit;// add new bit to current number
+                return getCode2(temp->parent, code, 0, length);
         }else{
                 code = code << ((*length)-1);
                 code += bit;
@@ -221,8 +220,9 @@ void updateTree(AHNode *temp, AHNode *nodeTree[]){
         temp->weight++;
     }else{
         target=findTarget(temp, nodeTree);
-        //Condition#1: target found, otherwise, no need to swap
-        //Condition#2: target is not the parent of current node, if it is, no need to swap
+        //Condition#1: if no target found, no need to swap node
+        //Condition#2: if target is the node's parent, no need to swap the node
+        //             since the parent is a pseudo node made for linking the tree structure
         if(target!=NULL&& target!=temp->parent){
             swapNode(temp, target, nodeTree);
         }
@@ -232,6 +232,7 @@ void updateTree(AHNode *temp, AHNode *nodeTree[]){
 }
 
 void swapNode(AHNode *temp, AHNode *target, AHNode *nodeTree[]){
+    // point to the node's parent, so that we can swap nodes
     AHNode *tempParent;
     AHNode *targetParent;
     
@@ -252,7 +253,6 @@ void swapNode(AHNode *temp, AHNode *target, AHNode *nodeTree[]){
     }else{
         tempParent->right=target;
     }
-    
     
     // update in tree
     nodeTree[temp->ID]=target;

@@ -35,14 +35,14 @@ int main(int argc, char *argv[]) {
         filename=argv[1];
         getInfo(filename);
         help();
-        return 1;
+        return 0;
     }
     
     //print help information and quit if no parameters, print statistics if only filename presents
     if(argv[1]==NULL||argv[2]==NULL||argv[3]==NULL){
-       // filename=argv[1];
-      //  getInfo(filename);
-        adaptiveCompr("image.dat.raw");
+        //filename=argv[1];
+        //getInfo("text.dat");
+        //shannon_routine("image.dat.raw");
         help();
         return 1;
     }

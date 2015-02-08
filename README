@@ -6,12 +6,20 @@
 #compiled on Nunki.usc.edu with g++
 
 
-#Known Issue:
+#######Known Issue:
 #      When I run this program on my local machine, Mac OSX 10.10, Xcode 6.1.1 and g++ 4.2.1
 #      the adaptive huffman encoder  will produce error output file, with size larger than the expected ones.
 #      It will only produce the correct output on the first run after a new compile.
 #      However, this problem is not existing on Nunki server, so I do all the test and record the result on Nunki.
+#      I can also run the program without any problem on my mac desktop, so I assume the problem is about the compiler or
+#      environment on my laptop only. If you run the program with any issue on your local machine, please run it on Nunki
 
+#######Compile and batch run instructions:
+#      For compiling the program, cd to the directory of this README file and use make -f README/gmake -f README to compile the program
+#      A instruction on execution parameters format will be shown
+#      Follow the instruction for single run of certain algorithm and inpout data
+#      For batch run on all algorithms and input data
+#      cd to /debug folder and use make -f RUN/gmake -f RUN to run the batch script
 
 compile:
 

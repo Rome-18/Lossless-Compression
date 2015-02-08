@@ -51,12 +51,6 @@ void shannon_routine(char *filename){
    
     makeShannonArray(frequency,node_count, array);
     
-//    cout<<"check sorted array by weight begin"<<endl;
-//    for (int x=0; x<node_count;x++){
-//        
-//        cout<<array[x].val<<" "<<array[x].weight<<endl;
-//    }
-//    cout<<"check sorted array by weight end"<<endl;
     
     Node *root=shannonTree(array, 0, node_count-1);
     
@@ -64,9 +58,11 @@ void shannon_routine(char *filename){
     
     shannonCode(table, root, 0,0,0);
     
-//    for (int x=0;x<256;x++){
-//        cout<<x<<" "<<table[x].codeLength<<endl;
-//    }
+//        for (int x=0;x<256;x++){
+//            if(frequency[x]!=0){
+//            cout<<"symbol: "<<x<<" code: "<<table[x].code<<endl;
+//            }
+//        }
 
     doCompression(filename, table);
     
