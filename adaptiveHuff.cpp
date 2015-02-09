@@ -92,6 +92,16 @@ void adaptiveCompr(char *filename){
     while(infile.good()){
         sym=infile.get();
         
+        // Initial new node;
+        AHNode *symbol=new AHNode;
+        symbol->val=sym;
+        symbol->weight=1;
+        symbol->ID=-1;
+        symbol->left=NULL;
+        symbol->right=NULL;
+        symbol->parent=NULL;
+        
+        
         // new symbol,
         if(nodeList[sym]==NULL){
                 codeLength=0;
@@ -99,12 +109,13 @@ void adaptiveCompr(char *filename){
                 OutputBits(output_file, code, codeLength);
                 bit_count+=codeLength;
                 codeLength=0;
+                // Use the symbol's representation as its unique codeword, so, output code is sym itself here
                 OutputBits(output_file, sym, 8);
                 bit_count+=codeLength;
             
                 // Create new NYA node and node for new symbol, add them to the tree.
-                NYA=addnewNode(NYA, nodeList, nodeTree, sym);
-            
+                //NYA=addnewNode(NYA, nodeList, nodeTree, sym);
+                NYA=addnewNode(NYA, nodeList, nodeTree, symbol);
                 // Put the new added branch to proper place on the tree
                 // This update is a special case, new node has weight of 1, to be added to the old NYA's right child
                 // The nearest existing node with weight change is new node's parent
@@ -157,17 +168,10 @@ int getCode2(AHNode *temp, int code, int bit, int *length){
 
 
 
-AHNode *addnewNode(AHNode *oldNYA, AHNode *nodeList[], AHNode *nodeTree[], unsigned char sym){
-    // initialize node
-    AHNode *temp=new AHNode;
-    temp->val=-1;
-    temp->weight=0;
-    temp->ID=-1;
-    temp->left=NULL;
-    temp->right=NULL;
-    temp->parent=NULL;
+//AHNode *addnewNode(AHNode *oldNYA, AHNode *nodeList[], AHNode *nodeTree[], unsigned char sym){
+AHNode *addnewNode(AHNode *oldNYA, AHNode *nodeList[], AHNode *nodeTree[], AHNode *temp){
     
-    // initialize new NYA node
+    // initialize a new NYA node
     AHNode *newNYA=new AHNode;
     newNYA->val=-1;
     newNYA->weight=0;
@@ -177,22 +181,25 @@ AHNode *addnewNode(AHNode *oldNYA, AHNode *nodeList[], AHNode *nodeTree[], unsig
     newNYA->parent=NULL;
     
     
-    // Assign ID number to new nodes
+    // Assign ID number to new nodes, and link it to the oldNYA, as it is the parent of new node now
+    // The new node should be always the right child of old NYA, so link to the right
     temp->ID=oldNYA->ID-1;
-    newNYA->ID=oldNYA->ID-2;
-    
-    // Link node
-    temp->weight=1;
     temp->parent=oldNYA;
-    temp->val=sym;
-    
-    newNYA->parent=oldNYA;
-    
-    oldNYA->left=newNYA;
     oldNYA->right=temp;
+    
+    // Link new NYA to old NYA, new NYA should always be the left child of old NYA
+    newNYA->ID=oldNYA->ID-2;
+    newNYA->parent=oldNYA;
+    oldNYA->left=newNYA;
+
+    
+    // Old NYA now is a pseudo node with weight = 1
     oldNYA->weight=1;
     
-    nodeList[sym]=temp;
+    
+    // Add new node to the nodelist, so that the next time it appears, its old symbol
+    nodeList[temp->val]=temp;
+    
     nodeTree[temp->ID]=temp;
     nodeTree[newNYA->ID]=newNYA;
     
@@ -238,7 +245,10 @@ void swapNode(AHNode *temp, AHNode *target, AHNode *nodeTree[]){
     
     tempParent=temp->parent;
     targetParent=target->parent;
+    
+    
     // Link temp to target position
+    // Need to determine the node is left or right child of its parent
     temp->parent=targetParent;
     if(target==targetParent->left){
         targetParent->left=temp;
@@ -247,6 +257,7 @@ void swapNode(AHNode *temp, AHNode *target, AHNode *nodeTree[]){
     }
     
     // Link target to the temp position
+    // Need to determine the left or right as well
     target->parent=tempParent;
     if(temp==tempParent->left) {
         tempParent->left=target;

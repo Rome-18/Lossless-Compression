@@ -31,6 +31,8 @@ int main(int argc, char *argv[]) {
     bool isEncoding=true;
     int algorithm=0;
     
+    
+    // If only one parameter is set, it shoud be the filename, so run the statistics function here.
     if(argv[1]!=NULL&&argv[2]==NULL){
         filename=argv[1];
         getInfo(filename);
@@ -40,9 +42,6 @@ int main(int argc, char *argv[]) {
     
     //print help information and quit if no parameters, print statistics if only filename presents
     if(argv[1]==NULL||argv[2]==NULL||argv[3]==NULL){
-        //filename=argv[1];
-        //getInfo("text.dat");
-        //shannon_routine("image.dat.raw");
         help();
         return 1;
     }
@@ -131,4 +130,5 @@ void help(){
     cout<<"./lossless encode [sf/hm/ah] [filename]"<<endl;
     cout<<"For run length encoding and decoding, follow the format below"<<endl;
     cout<<"./lossless [encode/decode] [rl/mrl/mtf] [filename]"<<endl;
+    cout<<"Use gmake -f RUN to run batch script"<<endl;
 }

@@ -84,16 +84,16 @@ void basicRLDC(char* filename){
     
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
-
+    sym=infile.get();
     
     while(infile.good()){
         
-        sym=infile.get();
+        //sym=infile.get();
         
         if(isCounter){
             counter=sym;
             isCounter=false;
-        }else{
+        }else{ //
             for (int i=0; i<counter;i++){
                 OutputBits(output_file, sym, 8);
                 //cout<<(char)sym;
@@ -102,6 +102,7 @@ void basicRLDC(char* filename){
             }
             isCounter=true;
         }
+        sym=infile.get();
     }
     
     infile.close();
@@ -196,10 +197,10 @@ void modifiedRLDC(char *filename){
     
     
     ifstream infile(filename, ios_base::in | ios_base::binary);
-    
+    sym=infile.get();
     
     while(infile.good()){
-        sym=infile.get();
+      //  sym=infile.get();
         
         // if symbol>127, it means the MSB is 1, otherwise, MSB=0
         if(sym>127){
@@ -227,6 +228,7 @@ void modifiedRLDC(char *filename){
                 bit_count+=8;
             }
         }
+        sym=infile.get();
         
     }
     

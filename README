@@ -15,11 +15,17 @@
 #      environment on my laptop only. If you run the program with any issue on your local machine, please run it on Nunki
 
 #######Compile and batch run instructions:
-#      For compiling the program, cd to the directory of this README file and use make -f README/gmake -f README to compile the program
+#      For compiling the program, cd to the directory of this README file and use < make -f README/gmake -f README > to compile the program
 #      A instruction on execution parameters format will be shown
 #      Follow the instruction for single run of certain algorithm and inpout data
 #      For batch run on all algorithms and input data
 #      cd to /debug folder and use make -f RUN/gmake -f RUN to run the batch script
+
+#######Known issues
+#      The run length and modified run length algoritms have some problem when running the decoding routines
+#      The decoder will reach the EOF earlier than expected, but for the decoeded parts, the content is the same with the orginal one.
+#      I have met the same issue on MTF transformation on my local machine, however it runs good on Nunki serve. But the RL and MRL will not
+#      run perfectly on Nunki as well. I'm still debugging this part to see if I did anything wrong.
 
 compile:
 
