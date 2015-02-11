@@ -58,11 +58,7 @@ void huffman_routine(char *filename){
     
     HuffCode(table, root, 0, 0, 0);
 
-//    for (int x=0;x<256;x++){
-//        if(frequency[x]!=0){
-//        cout<<"symbol: "<<x<<" code: "<<table[x].code<<endl;
-//        }
-//    }
+
     
     doCompression(filename, table);
     
